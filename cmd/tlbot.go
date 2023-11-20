@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -12,11 +13,13 @@ import (
 var (
 	TeleToken = os.Getenv("TELE_TOKEN")
 )
+var appVersion string = "v1.0.1"
 
 var kbotCmd = &cobra.Command{
-	Use:   "kbot",
-	Short: "A brief desc of command",
-	Long:  "The long desc of a command",
+	Use:     "kbot",
+	Aliases: []string{"start"},
+	Short:   "A brief desc of command",
+	Long:    "The long desc of a command",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("kbot %s started", appVersion)
 		kbot, err := telebot.NewBot(telebot.Settings{
@@ -31,6 +34,7 @@ var kbotCmd = &cobra.Command{
 		}
 
 		kbot.Handle(telebot.OnText, func(m telebot.Context) error {
+			log.Print(m.Message().Payload, m.Text())
 			return err
 		})
 
