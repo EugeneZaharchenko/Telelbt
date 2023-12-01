@@ -1,6 +1,6 @@
 APP := useless_bot
 REGISTRY := ghcr.io/eugenezaharchenko
-VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
+VERSION=$(shell git rev-parse --short HEAD)
 targetos=windows
 linux: targetos = linux
 mac: targetos = darwin
@@ -33,6 +33,9 @@ image:
 
 push:
 	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+
+print:
+	echo $(VERSION)
 
 clean:
 	rm -rf kbot
